@@ -1,38 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{% load static %}
-	<meta charset="UTF-8">
-	<title>Title</title>
-	<link rel="stylesheet" href='{% static "satellite/css/ui.jqgrid-bootstrap.css" %}'>
-	<script src='{% static "satellite/js/jquery-3.3.1.min.js" %}'></script>
-	<script src='{% static "satellite/js/jquery.jqGrid.js" %}'></script>
-	<script src='{% static "satellite/js/i18n/grid.locale-en.js" %}'></script>
-	<script>
-		$.ajax({
-            method: 'GET',
-            url: '{% url 'grid_config' %}',
-            success: function (data) {
-                $("#my_grid")
-                        .jqGrid(data)
-                        .navGrid('#my_grid_nav',
-                                {add: false, edit: false, del: false, view: true},
-                                {}, // edit options
-                                {}, // add options
-                                {}, // del options
-                                {multipleSearch: true, closeOnEscape: true}, // search options
-                                {jqModal: false, closeOnEscape: true} // view options
-                        )
-            },
-            error: function (data) {
-                alert("An error occurred!");
-                console.log(data);
-            },
-        })
-	</script>
+    <meta charset="UTF-8">
+    <title>Satellite UPM-SAT2</title>
 </head>
 <body>
-<table id='my_grid'></table>
-<div id='my_grid_nav'></div>
+    <div>
+        <a href="{% url 'satellite:tm' %}">TM</a>
+        <br />
+        <a href="#">TC</a>
+        <br />
+    </div>
 </body>
 </html>

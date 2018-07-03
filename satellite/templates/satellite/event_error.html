@@ -1,0 +1,22 @@
+{% extends 'satellite/info.html' %}
+
+{% block grid %}
+<table>
+	<thead>
+	<tr>
+		<th>Event Name</th>
+		<th>Mission Clock</th>
+		<th>Sequence Number</th>
+	</tr>
+	</thead>
+	<tbody>
+	{% for error in errors %}
+	<tr>
+		<td>{{ error.eve_name }}</td>
+		<td>{{ error.mis_clock }}</td>
+		<td>{{ error.seq_number }}</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'satellite/base.html' %}
+
+{% block content %}
+{% block grid %}
+{% endblock %}
+<div class="pagination">
+	<span class="step-links">
+		{% if errors.has_previous %}
+			<a href="?page={{ errors.previous_page_number }}">previous</a>
+		{% endif %}
+
+		<span class="current">
+			Page {{ errors.number }} of {{ errors.paginator.num_pages }}.
+		</span>
+
+		{% if errors.has_next %}
+			<a href="?page={{ errors.next_page_number }}">next</a>
+		{% endif %}
+	</span>
+</div>
+{% endblock %}

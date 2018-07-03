@@ -9,6 +9,9 @@ class EventErrComm(DjangoCassandraModel):
     mis_clock = columns.BigInt()
     seq_number = columns.Integer()
 
+    def __str__(self):
+        return "Event {} with clock {} and sequence {}.".format(self.eve_name, self.mis_clock, self.seq_number)
+
 
 class HelloComm(DjangoCassandraModel):
     uid_he = columns.TimeUUID(primary_key=True, default=uuid.uuid1)

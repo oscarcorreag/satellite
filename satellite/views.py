@@ -1,22 +1,39 @@
 # -*- coding: utf-8 -*-
-from django.http import HttpResponse
-from django.template import loader
-from grids import ExampleGrid
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.shortcuts import render
+from . import models
 
 
 # Create your views here.
 def index(request):
-    template = loader.get_template('satellite/index.html')
-    return HttpResponse(template.render({}, request))
+    return render(request, 'satellite/index.html', {})
 
 
-def grid_handler(request):
-    # handles pagination, sorting and searching
-    grid = ExampleGrid()
-    return HttpResponse(grid.get_json(request), content_type="application/json")
+def tm(request):
+    return render(request, 'satellite/tm.html', {})
 
 
-def grid_config(request):
-    # build a config suitable to pass to jqgrid constructor
-    grid = ExampleGrid()
-    return HttpResponse(grid.get_config(), content_type="application/json")
+def errors(request):
+    error_list = models.EventErrComm.objects.all()
+    paginator = Paginator(error_list, 2)
+    page = request.GET.get('page')
+    try:
+        e = paginator.page(page)
+    except PageNotAnInteger:
+        e = paginator.page(1)
+    except EmptyPage:
+        e = paginator.page(paginator.num_pages)
+    return render(request, 'satellite/event_error.html', {'errors': e})
+
+
+def hello(request):
+    hello_list = models.HelloComm.objects.all()
+    paginator = Paginator(hello_list, 2)
+    page = request.GET.get('page')
+    try:
+        e = paginator.page(page)
+    except PageNotAnInteger:
+        e = paginator.page(1)
+    except EmptyPage:
+        e = paginator.page(paginator.num_pages)
+    return render(request, 'satellite/event_error.html', {'errors': e})
