@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'satellite/info.html' %}
 
-</body>
-</html>
+{% block grid %}
+<table>
+	<thead>
+	<tr>
+		<th>Battery</th>
+		<th>BOOM1 VBUS</th>
+		<th>BOOM2 VBUS</th>
+        <th>Mission Clock</th>
+        <th>MTS VBUS</th>
+        <th>n15V TM</th>
+        <th>Operating Mode</th>
+        <th>p15V TM</th>
+        <th>p3v3 TM</th>
+        <th>p5v TM</th>
+        <th>RW P5V</th>
+        <th>Sequence Number</th>
+        <th>TTC STAT</th>
+	</tr>
+	</thead>
+	<tbody>
+	{% for hello in info %}
+	<tr>
+		<td>{{ hello.battery }}</td>
+		<td>{{ hello.boom1_vbus}}</td>
+		<td>{{ hello.boom2_vbus }}</td>
+        <td>{{ hello.mis_clock }}</td>
+        <td>{{ hello.mts_vbus }}</td>
+        <td>{{ hello.n15v_tm }}</td>
+        <td>{{ hello.ope_mode }}</td>
+        <td>{{ hello.p15v_tm }}</td>
+        <td>{{ hello.p3v3_tm }}</td>
+        <td>{{ hello.p5v_tm }}</td>
+        <td>{{ hello.rw_p5v }}</td>
+        <td>{{ hello.seq_number }}</td>
+        <td>{{ hello.ttc_stat }}</td>
+	</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

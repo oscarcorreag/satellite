@@ -10,7 +10,7 @@ class EventErrComm(DjangoCassandraModel):
     seq_number = columns.Integer()
 
     def __str__(self):
-        return "Event {} with clock {} and sequence {}.".format(self.eve_name, self.mis_clock, self.seq_number)
+        return "Error Event {} with clock {} and sequence {}.".format(self.eve_name, self.mis_clock, self.seq_number)
 
 
 class HelloComm(DjangoCassandraModel):
@@ -29,6 +29,10 @@ class HelloComm(DjangoCassandraModel):
     seq_number = columns.Integer()
     ttc_stat = columns.Text()
 
+    def __str__(self):
+        return "Hello Event, operating mode {} with clock {} and sequence {}.".format(self.ope_mode, self.mis_clock,
+                                                                                      self.seq_number)
+
 
 class HouseKeepComm(DjangoCassandraModel):
     uid_hk = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
@@ -45,3 +49,8 @@ class HouseKeepComm(DjangoCassandraModel):
     rw_p5v = columns.BigInt()
     seq_number = columns.Integer()
     ttc_stat = columns.Text()
+
+    def __str__(self):
+        return "Housekeeping Event, operating mode {} with clock {} and sequence {}.".format(self.ope_mode,
+                                                                                             self.mis_clock,
+                                                                                             self.seq_number)

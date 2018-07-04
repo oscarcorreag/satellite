@@ -1,12 +1,13 @@
 {% extends 'satellite/base.html' %}
 
 {% block content %}
+<p><a href="{% url 'satellite:index' %}">Back</a></p>
 <div>
     <a href="{% url 'satellite:errors' %}">Event Error</a>
     <br />
-    <a href="#">Hello</a>
+    <a href="{% url 'satellite:hello' %}">Hello</a>
     <br />
-    <a href="#">Housekeeping</a>
+    <a href="{% url 'satellite:housekeeping' %}">Housekeeping</a>
     <br />
 </div>
 {% endblock %}
