@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'tm/errors$', views.errors, name='errors'),
     url(r'tm/hello$', views.hello, name='hello'),
     url(r'tm/housekeeping$', views.housekeeping, name='housekeeping'),
+    url(r'tm/upload_tm$', views.upload_tm, name='upload_tm'),
 ]

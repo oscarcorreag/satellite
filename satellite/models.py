@@ -25,7 +25,7 @@ class HelloComm(DjangoCassandraModel):
     p15v_tm = columns.BigInt()
     p3v3_tm = columns.BigInt()
     p5v_tm = columns.BigInt()
-    rw_p5v = columns.BigInt()
+    rw_p5v = columns.Text()
     seq_number = columns.Integer()
     ttc_stat = columns.Text()
 
@@ -46,7 +46,7 @@ class HouseKeepComm(DjangoCassandraModel):
     p15v_tm = columns.BigInt()
     p3v3_tm = columns.BigInt()
     p5v_tm = columns.BigInt()
-    rw_p5v = columns.BigInt()
+    rw_p5v = columns.Text()
     seq_number = columns.Integer()
     ttc_stat = columns.Text()
 

@@ -1,8 +1,8 @@
 {% extends 'satellite/base.html' %}
 
 {% block content %}
-<p><a href="{% url 'satellite:index' %}">Back</a></p>
-<div>
+<div style="margin-bottom: 20px;"><a href="{% url 'satellite:index' %}">Back</a></div>
+<div style="margin-bottom: 20px;">
     <a href="{% url 'satellite:errors' %}">Event Error</a>
     <br />
     <a href="{% url 'satellite:hello' %}">Hello</a>
@@ -10,4 +10,5 @@
     <a href="{% url 'satellite:housekeeping' %}">Housekeeping</a>
     <br />
 </div>
+<div style="margin-bottom: 20px;"><a href="{% url 'satellite:upload_tm' %}">Upload File</a></div>
 {% endblock %}

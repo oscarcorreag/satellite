@@ -1,0 +1,12 @@
+{% extends 'satellite/base.html' %}
+
+{% block content %}
+<div style="margin-bottom: 20px;"><a href="{% url 'satellite:tm' %}">Back</a></div>
+<div style="margin-bottom: 20px;">
+<form action="{% url 'satellite:upload_tm' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="tm_file">
+    <button type="submit">Upload</button>
+</form>
+</div>
+{% endblock %}
