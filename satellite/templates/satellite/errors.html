@@ -4,6 +4,8 @@
 <table>
 	<thead>
 	<tr>
+		<th>Year</th>
+        <th>Time</th>
 		<th>Event Name</th>
 		<th>Mission Clock</th>
 		<th>Sequence Number</th>
@@ -12,6 +14,8 @@
 	<tbody>
 	{% for error in info %}
 	<tr>
+		<td>{{ error.year }}</td>
+        <td>{{ error.post_time }}</td>
 		<td>{{ error.eve_name }}</td>
 		<td>{{ error.mis_clock }}</td>
 		<td>{{ error.seq_number }}</td>

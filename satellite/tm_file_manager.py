@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.utils import timezone
 from enum import Enum
 import re
 import satellite.models as models
@@ -59,11 +60,12 @@ class TmFileManager:
             if m is None:
                 raise ValueError('Sequence Number was expected after "Received TM command" in line {}.'.format(line_number))
             seq_number = int(m.group(1))
+            post_time = timezone.now()
             # Create corresponding event object based on type. Moreover, set attributes captured in this line.
             # IMPORTANT: Set the current type which is needed for coming lines.
             if type_ == ERROR_COMMAND:
                 self.current_type = Event.Error
-                self.event = models.EventErrComm()
+                self.event = models.EventErrComm(year=post_time.year, post_time=post_time)
                 # Capture and set event name which is present in ERROR events only.
                 m = re.search('Event Name\s*:?\s*(\w+)', line)
                 if m is None:
@@ -72,10 +74,10 @@ class TmFileManager:
             elif type_ == HELLO_COMMAND or type_ == HOUSE_COMMAND:
                 if type_ == HELLO_COMMAND:
                     self.current_type = Event.Hello
-                    self.event = models.HelloComm()
+                    self.event = models.HelloComm(year=post_time.year, post_time=post_time)
                 else:
                     self.current_type = Event.Housekeeping
-                    self.event = models.HouseKeepComm()
+                    self.event = models.HouseKeepComm(year=post_time.year, post_time=post_time)
                 # Capture operating mode which is present in two types, i.e., HELLO and HOUSEKEEPING.
                 m = re.search('Operating Mode\s*:?\s*(\w+)', line)
                 if m is None:

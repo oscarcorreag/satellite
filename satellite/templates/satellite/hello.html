@@ -4,6 +4,8 @@
 <table>
 	<thead>
 	<tr>
+        <th>Year</th>
+        <th>Time</th>
 		<th>Battery</th>
 		<th>BOOM1 VBUS</th>
 		<th>BOOM2 VBUS</th>
@@ -22,6 +24,8 @@
 	<tbody>
 	{% for hello in info %}
 	<tr>
+        <td>{{ hello.year }}</td>
+        <td>{{ hello.post_time }}</td>
 		<td>{{ hello.battery }}</td>
 		<td>{{ hello.boom1_vbus}}</td>
 		<td>{{ hello.boom2_vbus }}</td>

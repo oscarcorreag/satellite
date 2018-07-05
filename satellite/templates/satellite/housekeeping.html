@@ -4,6 +4,8 @@
 <table>
 	<thead>
 	<tr>
+        <th>Year</th>
+        <th>Time</th>
 		<th>Battery</th>
 		<th>BOOM1 VBUS</th>
 		<th>BOOM2 VBUS</th>
@@ -22,6 +24,8 @@
 	<tbody>
 	{% for housek in info %}
 	<tr>
+        <td>{{ housek.year }}</td>
+        <td>{{ housek.post_time }}</td>
 		<td>{{ housek.battery }}</td>
 		<td>{{ housek.boom1_vbus}}</td>
 		<td>{{ housek.boom2_vbus }}</td>

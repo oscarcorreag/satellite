@@ -1,20 +1,26 @@
-import uuid
 from cassandra.cqlengine import columns
 from django_cassandra_engine.models import DjangoCassandraModel
 
 
 class EventErrComm(DjangoCassandraModel):
-    uid_ev = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
+    # uid_ev = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
+    year = columns.Integer(primary_key=True, partition_key=True)
+    post_time = columns.DateTime(primary_key=True, clustering_order="DESC")
     eve_name = columns.Text()
     mis_clock = columns.BigInt()
     seq_number = columns.Integer()
+
+    class Meta:
+        get_pk_field = 'post_time'
 
     def __str__(self):
         return "Error Event {} with clock {} and sequence {}.".format(self.eve_name, self.mis_clock, self.seq_number)
 
 
 class HelloComm(DjangoCassandraModel):
-    uid_he = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
+    # uid_he = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
+    year = columns.Integer(primary_key=True, partition_key=True)
+    post_time = columns.DateTime(primary_key=True, clustering_order="DESC")
     battery = columns.Text()
     boom1_vbus = columns.Text()
     boom2_vbus = columns.Text()
@@ -28,13 +34,19 @@ class HelloComm(DjangoCassandraModel):
     rw_p5v = columns.Text()
     seq_number = columns.Integer()
     ttc_stat = columns.Text()
+
+    class Meta:
+        get_pk_field = 'post_time'
 
     def __str__(self):
         return "Hello Event, operating mode {} with clock {} and sequence {}.".format(self.ope_mode, self.mis_clock,
                                                                                       self.seq_number)
 
+
 class HouseKeepComm(DjangoCassandraModel):
-    uid_hk = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
+    # uid_hk = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
+    year = columns.Integer(primary_key=True, partition_key=True)
+    post_time = columns.DateTime(primary_key=True, clustering_order="DESC")
     battery = columns.Text()
     boom1_vbus = columns.Text()
     boom2_vbus = columns.Text()
@@ -48,6 +60,9 @@ class HouseKeepComm(DjangoCassandraModel):
     rw_p5v = columns.Text()
     seq_number = columns.Integer()
     ttc_stat = columns.Text()
+
+    class Meta:
+        get_pk_field = 'post_time'
 
     def __str__(self):
         return "Housekeeping Event, operating mode {} with clock {} and sequence {}.".format(self.ope_mode,
