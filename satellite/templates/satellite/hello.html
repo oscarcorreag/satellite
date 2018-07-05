@@ -25,7 +25,7 @@
 	{% for hello in info %}
 	<tr>
         <td>{{ hello.year }}</td>
-        <td>{{ hello.post_time }}</td>
+        <td>{{ hello.post_time|date:"d-m" }} {{ hello.post_time|time:"H:i:s.u" }}</td>
 		<td>{{ hello.battery }}</td>
 		<td>{{ hello.boom1_vbus}}</td>
 		<td>{{ hello.boom2_vbus }}</td>

@@ -25,7 +25,7 @@
 	{% for housek in info %}
 	<tr>
         <td>{{ housek.year }}</td>
-        <td>{{ housek.post_time }}</td>
+        <td>{{ housek.post_time|date:"d-m" }} {{ housek.post_time|time:"H:i:s.u" }}</td>
 		<td>{{ housek.battery }}</td>
 		<td>{{ housek.boom1_vbus}}</td>
 		<td>{{ housek.boom2_vbus }}</td>

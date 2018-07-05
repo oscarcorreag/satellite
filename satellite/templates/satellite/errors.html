@@ -15,7 +15,7 @@
 	{% for error in info %}
 	<tr>
 		<td>{{ error.year }}</td>
-        <td>{{ error.post_time }}</td>
+        <td>{{ error.post_time|date:"d-m" }} {{ error.post_time|time:"H:i:s.u" }}</td>
 		<td>{{ error.eve_name }}</td>
 		<td>{{ error.mis_clock }}</td>
 		<td>{{ error.seq_number }}</td>
