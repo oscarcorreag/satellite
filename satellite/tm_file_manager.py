@@ -1,11 +1,36 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from enum import Enum
 import re
 import satellite.models as models
-import pdb
+import hashlib
+
 
 HELLO_COMMAND = 'HELLO'
 ERROR_COMMAND = 'EVENTERROR'
 HOUSE_COMMAND = 'HOUSEKEEPING_TM'
+
+
+def md5(file_name):
+    hash_md5 = hashlib.md5()
+    with open(file_name, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hash_md5.update(chunk)
+    return hash_md5.hexdigest()
+
+
+def already_uploaded(file_name):
+    checksum = md5(file_name)
+    try:
+        models.Checksum.objects.get(pk=checksum)
+    except models.Checksum.DoesNotExist:
+        return False, checksum
+    return True, checksum
+
+
+def register_upload(token):
+    chk = models.Checksum(checksum=token)
+    chk.save()
 
 
 class Event(Enum):
@@ -111,6 +136,12 @@ class TmFileManager:
                     self.event.battery = m.group(1)
 
     def process(self, file_name):
-        f = open(file_name)
-        for line_number, line in enumerate(f):
-            self.process_line(line, line_number)
+        uploaded, token = already_uploaded(file_name)
+        if not uploaded:
+            f = open(file_name)
+            for line_number, line in enumerate(f):
+                self.process_line(line, line_number)
+            register_upload(token)
+            return 1
+        return -1
+

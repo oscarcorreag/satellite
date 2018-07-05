@@ -33,7 +33,6 @@ class HelloComm(DjangoCassandraModel):
         return "Hello Event, operating mode {} with clock {} and sequence {}.".format(self.ope_mode, self.mis_clock,
                                                                                       self.seq_number)
 
-
 class HouseKeepComm(DjangoCassandraModel):
     uid_hk = columns.TimeUUID(primary_key=True, default=uuid.uuid1)
     battery = columns.Text()
@@ -54,3 +53,7 @@ class HouseKeepComm(DjangoCassandraModel):
         return "Housekeeping Event, operating mode {} with clock {} and sequence {}.".format(self.ope_mode,
                                                                                              self.mis_clock,
                                                                                              self.seq_number)
+
+
+class Checksum(DjangoCassandraModel):
+    checksum = columns.Text(primary_key=True)

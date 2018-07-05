@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from . import models
 from tm_file_manager import TmFileManager
+# import pdb
 
 NUM_OBJECTS_PAGE = 50
 
@@ -59,6 +60,7 @@ def housekeeping(request):
 
 
 def upload_tm(request):
+    msg = ""
     if request.method == 'POST' and request.FILES['tm_file']:
         tm_file = request.FILES['tm_file']
         file_name = os.path.splitext(tm_file.name)
@@ -66,5 +68,8 @@ def upload_tm(request):
         fs = FileSystemStorage()
         fs.save(tm_file.name, tm_file)
         fm = TmFileManager()
-        fm.process(os.path.join(fs.location, tm_file.name))
-    return render(request, 'satellite/upload_tm.html')
+        result = fm.process(os.path.join(fs.location, tm_file.name))
+        msg = "File uploaded successfully!"
+        if result == -1:
+            msg = "File already uploaded!"
+    return render(request, 'satellite/upload_tm.html', {'msg': msg})
