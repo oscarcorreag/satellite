@@ -1,46 +1,69 @@
 {% extends 'satellite/info.html' %}
 
 {% block grid %}
-<table>
-	<thead>
-	<tr>
-        <th>Year</th>
-        <th>Time</th>
-		<th>Battery</th>
-		<th>BOOM1 VBUS</th>
-		<th>BOOM2 VBUS</th>
-        <th>Mission Clock</th>
-        <th>MTS VBUS</th>
-        <th>n15V TM</th>
-        <th>Operating Mode</th>
-        <th>p15V TM</th>
-        <th>p3v3 TM</th>
-        <th>p5v TM</th>
-        <th>RW P5V</th>
-        <th>Sequence Number</th>
-        <th>TTC STAT</th>
-	</tr>
-	</thead>
-	<tbody>
-	{% for housek in info %}
-	<tr>
-        <td>{{ housek.year }}</td>
-        <td>{{ housek.post_time|date:"d-m" }} {{ housek.post_time|time:"H:i:s.u" }}</td>
-		<td>{{ housek.battery }}</td>
-		<td>{{ housek.boom1_vbus}}</td>
-		<td>{{ housek.boom2_vbus }}</td>
-        <td>{{ housek.mis_clock }}</td>
-        <td>{{ housek.mts_vbus }}</td>
-        <td>{{ housek.n15v_tm }}</td>
-        <td>{{ housek.ope_mode }}</td>
-        <td>{{ housek.p15v_tm }}</td>
-        <td>{{ housek.p3v3_tm }}</td>
-        <td>{{ housek.p5v_tm }}</td>
-        <td>{{ housek.rw_p5v }}</td>
-        <td>{{ housek.seq_number }}</td>
-        <td>{{ housek.ttc_stat }}</td>
-	</tr>
-	{% endfor %}
-	</tbody>
-</table>
+<div style="margin-bottom: 20px;">
+    <form action="{% url 'satellite:housekeeping' %}" method="get">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Year =</td>
+                <td><input type="text" name="year"></td>
+            </tr>
+            <tr>
+                <td>Datetime from:</td>
+                <td><input type="text" name="post_time_from"> (yyyy-mm-dd hh:mm:ss.ms)</td>
+            </tr>
+            <tr>
+                <td>Datetime to:</td>
+                <td><input type="text" name="post_time_to"> (yyyy-mm-dd hh:mm:ss.ms)</td>
+            </tr>
+        </table>
+        <button type="submit">Filter</button>
+        <button type="reset">Reset</button>
+    </form>
+</div>
+<div style="margin-bottom: 20px;">
+    <table>
+        <thead>
+        <tr>
+            <th>Year</th>
+            <th>Datetime</th>
+            <th>Battery</th>
+            <th>BOOM1 VBUS</th>
+            <th>BOOM2 VBUS</th>
+            <th>Mission Clock</th>
+            <th>MTS VBUS</th>
+            <th>n15V TM</th>
+            <th>Operating Mode</th>
+            <th>p15V TM</th>
+            <th>p3v3 TM</th>
+            <th>p5v TM</th>
+            <th>RW P5V</th>
+            <th>Sequence Number</th>
+            <th>TTC STAT</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for housek in info %}
+        <tr>
+            <td>{{ housek.year }}</td>
+            <td>{{ housek.post_time|date:"d-m" }} {{ housek.post_time|time:"H:i:s.u" }}</td>
+            <td>{{ housek.battery }}</td>
+            <td>{{ housek.boom1_vbus}}</td>
+            <td>{{ housek.boom2_vbus }}</td>
+            <td>{{ housek.mis_clock }}</td>
+            <td>{{ housek.mts_vbus }}</td>
+            <td>{{ housek.n15v_tm }}</td>
+            <td>{{ housek.ope_mode }}</td>
+            <td>{{ housek.p15v_tm }}</td>
+            <td>{{ housek.p3v3_tm }}</td>
+            <td>{{ housek.p5v_tm }}</td>
+            <td>{{ housek.rw_p5v }}</td>
+            <td>{{ housek.seq_number }}</td>
+            <td>{{ housek.ttc_stat }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

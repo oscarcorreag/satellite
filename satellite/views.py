@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 import os
+from django.utils import dateparse
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render
 from django.utils import timezone
 from . import models
 from tm_file_manager import TmFileManager
-# import pdb
+import pdb
 
 NUM_OBJECTS_PAGE = 50
 
@@ -21,7 +22,24 @@ def tm(request):
 
 
 def errors(request):
-    error_list = models.EventErrComm.objects.all()
+    by_year, year = filter_by_year(request)
+    by_time_from, time_from = filter_by_time(request, 'post_time_from')
+    by_time_to, time_to = filter_by_time(request, 'post_time_to')
+    error_list = None
+    if by_year:
+        error_list = models.EventErrComm.objects.filter(year__eq=year)
+    if by_time_from:
+        if error_list is None:
+            error_list = models.EventErrComm.objects.filter(post_time__gte=time_from)
+        else:
+            error_list = error_list.filter(post_time__gte=time_from)
+    if by_time_to:
+        if error_list is None:
+            error_list = models.EventErrComm.objects.filter(post_time__lte=time_to)
+        else:
+            error_list = error_list.filter(post_time__lte=time_to)
+    if not by_year and not by_time_from and not by_time_to:
+        error_list = models.EventErrComm.objects.all()
     paginator = Paginator(error_list, NUM_OBJECTS_PAGE)
     page = request.GET.get('page')
     try:
@@ -34,7 +52,24 @@ def errors(request):
 
 
 def hello(request):
-    hello_list = models.HelloComm.objects.all()
+    by_year, year = filter_by_year(request)
+    by_time_from, time_from = filter_by_time(request, 'post_time_from')
+    by_time_to, time_to = filter_by_time(request, 'post_time_to')
+    hello_list = None
+    if by_year:
+        hello_list = models.HelloComm.objects.filter(year__eq=year)
+    if by_time_from:
+        if hello_list is None:
+            hello_list = models.HelloComm.objects.filter(post_time__gte=time_from)
+        else:
+            hello_list = hello_list.filter(post_time__gte=time_from)
+    if by_time_to:
+        if hello_list is None:
+            hello_list = models.HelloComm.objects.filter(post_time__lte=time_to)
+        else:
+            hello_list = hello_list.filter(post_time__lte=time_to)
+    if not by_year and not by_time_from and not by_time_to:
+        hello_list = models.HelloComm.objects.all()
     paginator = Paginator(hello_list, NUM_OBJECTS_PAGE)
     page = request.GET.get('page')
     try:
@@ -47,7 +82,24 @@ def hello(request):
 
 
 def housekeeping(request):
-    housek_list = models.HouseKeepComm.objects.all()
+    by_year, year = filter_by_year(request)
+    by_time_from, time_from = filter_by_time(request, 'post_time_from')
+    by_time_to, time_to = filter_by_time(request, 'post_time_to')
+    housek_list = None
+    if by_year:
+        housek_list = models.HouseKeepComm.objects.filter(year__eq=year)
+    if by_time_from:
+        if housek_list is None:
+            housek_list = models.HouseKeepComm.objects.filter(post_time__gte=time_from)
+        else:
+            housek_list = housek_list.filter(post_time__gte=time_from)
+    if by_time_to:
+        if housek_list is None:
+            housek_list = models.HouseKeepComm.objects.filter(post_time__lte=time_to)
+        else:
+            housek_list = housek_list.filter(post_time__lte=time_to)
+    if not by_year and not by_time_from and not by_time_to:
+        housek_list = models.HouseKeepComm.objects.all()
     paginator = Paginator(housek_list, NUM_OBJECTS_PAGE)
     page = request.GET.get('page')
     try:
@@ -73,3 +125,21 @@ def upload_tm(request):
         if result == -1:
             msg = "File already uploaded!"
     return render(request, 'satellite/upload_tm.html', {'msg': msg})
+
+
+def filter_by_year(request):
+    try:
+        year = int(request.GET.get('year'))
+    except (ValueError, TypeError):
+        return False, -1
+    return True, year
+
+
+def filter_by_time(request, param_name):
+    try:
+        time_ = dateparse.parse_datetime(request.GET.get(param_name))
+        if time_ is None:
+            return False, None
+    except (ValueError, TypeError):
+        return False, None
+    return True, time_

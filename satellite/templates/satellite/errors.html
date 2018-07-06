@@ -1,26 +1,49 @@
 {% extends 'satellite/info.html' %}
 
 {% block grid %}
-<table>
-	<thead>
-	<tr>
-		<th>Year</th>
-        <th>Time</th>
-		<th>Event Name</th>
-		<th>Mission Clock</th>
-		<th>Sequence Number</th>
-	</tr>
-	</thead>
-	<tbody>
-	{% for error in info %}
-	<tr>
-		<td>{{ error.year }}</td>
-        <td>{{ error.post_time|date:"d-m" }} {{ error.post_time|time:"H:i:s.u" }}</td>
-		<td>{{ error.eve_name }}</td>
-		<td>{{ error.mis_clock }}</td>
-		<td>{{ error.seq_number }}</td>
-	</tr>
-	{% endfor %}
-	</tbody>
-</table>
+<div style="margin-bottom: 20px;">
+    <form action="{% url 'satellite:errors' %}" method="get">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Year =</td>
+                <td><input type="text" name="year"></td>
+            </tr>
+            <tr>
+                <td>Datetime from:</td>
+                <td><input type="text" name="post_time_from"> (yyyy-mm-dd hh:mm:ss.ms)</td>
+            </tr>
+            <tr>
+                <td>Datetime to:</td>
+                <td><input type="text" name="post_time_to"> (yyyy-mm-dd hh:mm:ss.ms)</td>
+            </tr>
+        </table>
+        <button type="submit">Filter</button>
+        <button type="reset">Reset</button>
+    </form>
+</div>
+<div style="margin-bottom: 20px;">
+    <table>
+        <thead>
+        <tr>
+            <th>Year</th>
+            <th>Datetime</th>
+            <th>Event Name</th>
+            <th>Mission Clock</th>
+            <th>Sequence Number</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for error in info %}
+        <tr>
+            <td>{{ error.year }}</td>
+            <td>{{ error.post_time|date:"d-m" }} {{ error.post_time|time:"H:i:s.u" }}</td>
+            <td>{{ error.eve_name }}</td>
+            <td>{{ error.mis_clock }}</td>
+            <td>{{ error.seq_number }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}
