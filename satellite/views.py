@@ -148,6 +148,7 @@ def filter_by_time(request, param_name):
 def branch_test_1(request):
     if request:
         print request.GET.get['year']
+        print request.GET.get['page']
         return True
     return False
 
