@@ -146,4 +146,7 @@ def filter_by_time(request, param_name):
 
 
 def branch_test_1(request):
-    return True
+    if request:
+        return True
+    return False
+
