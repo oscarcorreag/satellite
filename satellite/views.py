@@ -150,3 +150,7 @@ def branch_test_1(request):
         return True
     return False
 
+
+def issue_56(request):
+    return True
+
