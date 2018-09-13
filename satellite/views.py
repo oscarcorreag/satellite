@@ -143,6 +143,3 @@ def filter_by_time(request, param_name):
     except (ValueError, TypeError):
         return False, None
     return True, time_
-
-def issue_56(request):
-    return True
