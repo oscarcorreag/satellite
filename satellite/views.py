@@ -143,10 +143,3 @@ def filter_by_time(request, param_name):
     except (ValueError, TypeError):
         return False, None
     return True, time_
-
-
-def branch_test_1(request):
-    if request:
-        return True
-    return False
-
